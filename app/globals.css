@@ -1,8 +1,10 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fff0f3;
+  --foreground: #4a1025;
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
 }
 
 @theme inline {
@@ -12,15 +14,388 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+body {
+  background: linear-gradient(135deg, #fff0f3 0%, #ffd6e0 40%, #ffb3c6 70%, #ff8fab 100%);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+  overflow: hidden;
+  min-height: 100vh;
+}
+
+/* Floating hearts background */
+.floating-heart {
+  position: fixed;
+  pointer-events: none;
+  animation: float linear infinite;
+  opacity: 0.6;
+  z-index: 0;
+}
+
+/* Yes button base */
+.yes-btn {
+  background: linear-gradient(135deg, #ff4d6d, #c9184a);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: transform 0.2s, padding 0.3s, font-size 0.3s, background 0.3s, box-shadow 0.3s;
+  z-index: 10;
+  position: relative;
+}
+
+.yes-btn:hover {
+  background: linear-gradient(135deg, #ff758f, #ff4d6d);
+  filter: brightness(1.1);
+}
+
+/* No button base */
+.no-btn {
+  background: #e8e8e8;
+  color: #666;
+  border: none;
+  border-radius: 50px;
+  padding: 16px 32px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, opacity 0.2s;
+  z-index: 10;
+}
+
+.no-btn:hover {
+  background: #ddd;
+}
+
+/* Glow effect (noAttempts >= 2) */
+.yes-btn-glow {
+  animation: glow 1.5s ease-in-out infinite;
+}
+
+/* Pulse effect (noAttempts >= 4) */
+.yes-btn-pulse {
+  animation: pulse 0.8s ease-in-out infinite, glow 1.5s ease-in-out infinite;
+}
+
+/* Shimmer effect (noAttempts >= 7) */
+.yes-btn-shimmer {
+  background: linear-gradient(135deg, #ff4d6d, #c9184a, #ffd700, #c9184a, #ff4d6d);
+  background-size: 300% 100%;
+  animation: shimmer 1.5s linear infinite, pulse 0.5s ease-in-out infinite, glow 1s ease-in-out infinite;
+}
+
+/* Rainbow effect (noAttempts >= 10) */
+.yes-btn-rainbow {
+  background: linear-gradient(
+    135deg,
+    #ff0a54, #ff477e, #ff85a1, #ffd700, #ff477e, #f72585, #ff0a54
+  );
+  background-size: 400% 100%;
+  animation: rainbow 2s linear infinite, megaPulse 0.4s ease-in-out infinite, megaGlow 0.8s ease-in-out infinite;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+/* Sparkle animation */
+.sparkle {
+  animation: sparkleFade 0.8s ease-out forwards;
+  z-index: 20;
+}
+
+/* Screen shake */
+.screen-shake {
+  animation: shake 0.4s ease-in-out;
+}
+
+/* Card glow at high attempts */
+.card-glow {
+  animation: cardGlow 2s ease-in-out infinite;
+}
+
+/* Heart bounce on card */
+.heart-bounce {
+  animation: heartBeat 1.2s ease-in-out infinite;
+}
+
+/* Shimmering text */
+.text-shimmer {
+  background: linear-gradient(90deg, #c9184a, #ff4d6d, #ffd700, #ff4d6d, #c9184a);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 2s linear infinite;
+}
+
+/* --- Celebration Screen Styles --- */
+
+.celebration-hearts {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  align-items: center;
+}
+
+.celeb-heart {
+  font-size: 40px;
+  animation: celebFloat 2s ease-in-out infinite;
+}
+
+.celeb-heart-main {
+  font-size: 80px;
+  animation: heartBeat 1.2s ease-in-out infinite;
+}
+
+.celebration-title {
+  background: linear-gradient(135deg, #c9184a, #ff4d6d, #ff85a1, #c9184a);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 3s linear infinite;
+}
+
+.celebration-card {
+  animation: celebCardIn 1s ease-out 0.3s both;
+}
+
+/* ===== Keyframes ===== */
+
+@keyframes float {
+  0% {
+    transform: translateY(100vh) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.6;
+  }
+  90% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-100px) rotate(360deg);
+    opacity: 0;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+}
+
+@keyframes megaPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.12);
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(255, 77, 109, 0.4), 0 0 20px rgba(255, 77, 109, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 77, 109, 0.8), 0 0 40px rgba(255, 77, 109, 0.4), 0 0 60px rgba(255, 77, 109, 0.2);
+  }
+}
+
+@keyframes megaGlow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(255, 77, 109, 0.6), 0 0 30px rgba(255, 215, 0, 0.3), 0 0 50px rgba(255, 77, 109, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(255, 77, 109, 1), 0 0 60px rgba(255, 215, 0, 0.6), 0 0 90px rgba(255, 77, 109, 0.4), 0 0 120px rgba(247, 37, 133, 0.2);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: -100% 50%;
+  }
+}
+
+@keyframes rainbow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 400% 50%;
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+  70% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes heartBeat {
+  0%, 100% {
+    transform: scale(1);
+  }
+  15% {
+    transform: scale(1.3);
+  }
+  30% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.15);
+  }
+  60% {
+    transform: scale(1);
+  }
+}
+
+@keyframes sparkleFade {
+  0% {
+    transform: scale(0) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2) rotate(180deg);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(0.5) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10% {
+    transform: translateX(-6px) rotate(-0.5deg);
+  }
+  20% {
+    transform: translateX(6px) rotate(0.5deg);
+  }
+  30% {
+    transform: translateX(-4px) rotate(-0.3deg);
+  }
+  40% {
+    transform: translateX(4px) rotate(0.3deg);
+  }
+  50% {
+    transform: translateX(-2px);
+  }
+  60% {
+    transform: translateX(2px);
+  }
+  70% {
+    transform: translateX(-1px);
+  }
+}
+
+@keyframes cardGlow {
+  0%, 100% {
+    box-shadow: 0 8px 32px rgba(201, 24, 74, 0.15);
+  }
+  50% {
+    box-shadow: 0 8px 32px rgba(201, 24, 74, 0.3), 0 0 40px rgba(255, 77, 109, 0.2), 0 0 80px rgba(255, 77, 109, 0.1);
+  }
+}
+
+@keyframes celebFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes celebCardIn {
+  0% {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes confettiFall {
+  0% {
+    transform: translateY(-10px) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+/* Typing cursor blink */
+.typing-cursor {
+  animation: blink 0.6s step-end infinite;
+  font-weight: 100;
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+/* No button glitch effect (attempts 8-9) */
+.no-btn-glitch {
+  animation: noGlitch 0.2s ease-in-out infinite !important;
+}
+
+@keyframes noGlitch {
+  0%, 100% {
+    background-color: #e8e8e8;
+    box-shadow: none;
+  }
+  20% {
+    background-color: #ffb3c6;
+    box-shadow: -2px 0 4px rgba(255, 77, 109, 0.6);
+  }
+  40% {
+    background-color: #e8e8e8;
+    box-shadow: 2px 0 4px rgba(201, 24, 74, 0.4);
+  }
+  60% {
+    background-color: #ff758f;
+    box-shadow: -1px 1px 4px rgba(255, 77, 109, 0.8);
+  }
+  80% {
+    background-color: #e8e8e8;
+    box-shadow: 1px -1px 4px rgba(201, 24, 74, 0.3);
+  }
+}
+
+/* No button surrender */
+.no-btn-surrender {
+  background: linear-gradient(135deg, #ff4d6d, #c9184a) !important;
+  color: white !important;
+  font-weight: 700 !important;
+  animation: glow 1.5s ease-in-out infinite;
 }
